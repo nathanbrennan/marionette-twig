@@ -17,11 +17,26 @@ _.extend(Marionette.Renderer, {
 });
 
 _.extend(Marionette.TemplateCache.prototype, {
-  loadTemplate: function(templateId){
+  loadExistingTwigTemplate: function(templateId) {
+    return twig({
+      ref: templateId
+    });
+  },
+  loadTemplate: function(templateId) {
+    // first, see if the template is already loaded
+    if (this.loadExistingTwigTemplate(templateId) !== null) {
+      return {
+        id: templateId,
+        type: 'text/twig'
+      };
+    }
+
+    // second, load the template from a script tag
+    // eg: <script type="text/twig" id="templateId">
     var template = {
       html: Marionette.$(templateId).html(),
       type: Marionette.$(templateId).attr('type')
-    }
+    };
 
     if (!template.html || template.html.length === 0){
       throwError("Could not find template: '" + templateId + "'", "NoTemplateError");
@@ -30,9 +45,16 @@ _.extend(Marionette.TemplateCache.prototype, {
     return template;
   },
 
-  compileTemplate: function(template){
-    switch (template.type){
+  compileTemplate: function(template) {
+    switch (template.type) {
       case 'text/twig':
+        // first, see if the template is already loaded
+        var existingTemplate = this.loadExistingTwigTemplate(template.id);
+
+        if (existingTemplate !== null) {
+          return existingTemplate;
+        }
+
         return twig({
           id: template.id,
           data: template.html,
