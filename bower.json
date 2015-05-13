@@ -1,0 +1,30 @@
+{
+  "name": "marionette-twig",
+  "version": "1.0.0",
+  "homepage": "https://github.com/nathanbrennan/marionette-twig",
+  "authors": [
+    "Nathan Brennan <nathan_brennan@flightcentre.com",
+    "Dane Harnett <dane_harnett@flightcentre.com",
+    "Scott Warren <scott_warren@flightcentre.com>"
+  ],
+  "description": "Twig JS templates for Marionette",
+  "main": "backbone.marionette.twig.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "twig",
+    "twigjs",
+    "marionette",
+    "templates",
+    "views"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
